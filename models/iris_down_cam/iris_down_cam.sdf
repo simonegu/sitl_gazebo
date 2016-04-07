@@ -1,0 +1,73 @@
+<sdf version='1.5'>
+  <model name='iris_down_cam'>
+
+    <include>
+      <uri>model://iris</uri>
+    </include>
+
+    <joint name="flow_joint" type="revolute">
+      <child>camera_link</child>
+      <parent>iris::base_link</parent>
+      <axis>
+        <xyz>0 0 1</xyz>
+        <limit>
+          <upper>0</upper>
+          <lower>0</lower>
+        </limit>
+      </axis>
+    </joint>
+
+    <link name="camera_link">
+      <pose>0 0 0 0 1.5708 1.5708</pose>
+      <inertial>
+        <pose>0.01 0.025 0.025 0 -0 0</pose>
+        <mass>0.01</mass>
+        <inertia>
+          <ixx>4.15e-6</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>2.407e-6</iyy>
+          <iyz>0</iyz>
+          <izz>2.407e-6</izz>
+        </inertia>
+      </inertial>
+      <visual name="visual">
+        <geometry>
+          <box>
+            <size>0.02 0.05 0.05</size>
+          </box>
+        </geometry>
+      </visual>
+      <sensor name="camera1" type="camera">
+        <update_rate>30.0</update_rate>
+        <camera>
+          <horizontal_fov>0.6</horizontal_fov>
+          <image>
+            <width>640</width>
+            <height>480</height>
+            <format>R8G8B8</format>
+          </image>
+          <clip>
+            <near>0.1</near>
+            <far>100</far>
+          </clip>
+          <noise>
+            <type>gaussian</type>
+            <mean>0.0</mean>
+            <stddev>0.005</stddev>
+          </noise>
+        </camera>
+        <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
+          <robotNamespace>iris</robotNamespace>
+          <alwaysOn>true</alwaysOn>
+          <updateRate>30.0</updateRate>
+          <cameraName>camera1</cameraName>
+          <imageTopicName>image_raw</imageTopicName>
+          <cameraInfoTopicName>camera_info</cameraInfoTopicName>
+        </plugin>
+      </sensor>
+    </link>
+
+
+  </model>
+</sdf>
