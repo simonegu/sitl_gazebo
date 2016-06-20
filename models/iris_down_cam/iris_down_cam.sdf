@@ -41,11 +41,12 @@
       <sensor name="camera1" type="camera">
         <update_rate>30.0</update_rate>
         <camera>
-          <horizontal_fov>0.6</horizontal_fov>
+          <!-- focal length of snapdragon 280.1693782018111 result in 1.7033 field of view -->
+          <horizontal_fov>1.70333324</horizontal_fov>
           <image>
             <width>640</width>
             <height>480</height>
-            <format>R8G8B8</format>
+            <format>L8</format>
           </image>
           <clip>
             <near>0.1</near>
@@ -56,7 +57,16 @@
             <mean>0.0</mean>
             <stddev>0.005</stddev>
           </noise>
+          <!-- <distortion>
+            <k1>-0.2640186053623701</k1>
+            <k2>0.06940412062783204</k2>
+            <k3>-0.008088684701147913</k3>
+            <p1>0.0</p1>
+            <p2>0.0</p2>
+            <center>0.5 0.5</center>
+          </distortion> -->
         </camera>
+        <!-- plugin does not support camera distortion -->
         <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
           <robotNamespace>iris</robotNamespace>
           <alwaysOn>true</alwaysOn>
@@ -64,6 +74,14 @@
           <cameraName>camera1</cameraName>
           <imageTopicName>image_raw</imageTopicName>
           <cameraInfoTopicName>camera_info</cameraInfoTopicName>
+          <!-- <frameName>camera_link</frameName>
+          <hackBaseline>0</hackBaseline>
+          <focalLength>280.1693782018111</focalLength>
+          <distortionK1>-0.2640186053623701</distortionK1>
+          <distortionK2>0.06940412062783204</distortionK2>
+          <distortionK3>-0.008088684701147913</distortionK3>
+          <distortionT1>0.0</distortionT1>
+          <distortionT2>0.0</distortionT2> -->
         </plugin>
       </sensor>
     </link>
