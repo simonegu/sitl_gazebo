@@ -1,0 +1,357 @@
+<?xml version="1.0" ?>
+<!-- camera variables -->
+<xsl:variable name="cam_hfov">1.22</xsl:variable>
+<xsl:variable name="cam_width">752</xsl:variable>
+<xsl:variable name="cam_height">480</xsl:variable>
+<xsl:variable name="cam_update_rate">30</xsl:variable>
+<xsl:variable name="cam_visualisation">false</xsl:variable>
+
+<sdf version="1.4">
+  <model name="omni_rig">
+    <link name="base_link">
+      <inertial>
+        <pose>0.053 0.053 0.009 0 0 0</pose>
+        <mass>0.1</mass>
+        <inertia>
+          <ixx>8.86e-4</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>8.86e-4</iyy>
+          <iyz>0</iyz>
+          <izz>9.77e-4</izz>
+        </inertia>
+      </inertial>
+      <collision name='base_collision'>
+        <pose>0.053 0.053 0.009 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.106 0.106 0.018</size>
+          </box>
+        </geometry>
+        <surface>
+          <contact>
+            <ode>
+              <min_depth>0.001</min_depth>
+              <max_vel>0</max_vel>
+            </ode>
+          </contact>
+          <friction>
+            <ode/>
+          </friction>
+        </surface>
+      </collision>
+      <visual name='base_visual'>
+        <pose>0 0 0 0 -1.57 -1.57</pose>
+        <geometry>
+          <mesh>
+            <scale>0.001 0.001 0.001</scale>
+            <uri>model://omni_rig/meshes/Camera_mount_lens10_baseline60.stl</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <script>
+            <name>Gazebo/DarkGrey</name>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+          </script>
+        </material>
+      </visual>
+    </link>
+
+    <!-- IMU ----------------------------------------------------------------------------------------- -->
+    <link name="imu_link">
+      <pose>0 0.023 0.011 0 3.1415 0</pose>
+      <inertial>
+        <pose>0 0 0 0 0 0</pose>
+        <mass>0.01</mass>
+        <inertia>
+          <ixx>6.667e-9</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>6.667e-9</iyy>
+          <iyz>0</iyz>
+          <izz>6.667e-9</izz>
+        </inertia>
+      </inertial>
+      <visual name="imu_visual">
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.002 0.002 0.002</size>
+          </box>
+        </geometry>
+        <material>
+          <script>
+            <name>Gazebo/Black</name>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+          </script>
+        </material>
+      </visual>
+    </link>
+
+    <!-- CAMERAS----------------------------------------------------------------------------------------- -->
+    <!-- <link name="test_link">
+      <pose>0.023 0 0.011 0 0 -1.57</pose>
+      <inertial>
+        <pose>0 0 0 0 0 0</pose>
+        <mass>0.01</mass>
+        <inertia>
+          <ixx>6.667e-9</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>6.667e-9</iyy>
+          <iyz>0</iyz>
+          <izz>6.667e-9</izz>
+        </inertia>
+      </inertial>
+      <visual name="imu_visual">
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.002 0.002 0.002</size>
+          </box>
+        </geometry>
+        <material>
+          <script>
+            <name>Gazebo/Grey</name>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+          </script>
+        </material>
+      </visual>
+    </link> -->
+
+    <link name="camera_pair_1_link">
+      <pose>0 0 0 0 0 0</pose>
+      <inertial>
+        <pose>0 0 0 0 0 0</pose>
+        <mass>0.05</mass>
+        <inertia>
+          <ixx>3.3335e-8</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>3.3335e-8</iyy>
+          <iyz>0</iyz>
+          <izz>3.3335e-8</izz>
+        </inertia>
+      </inertial>
+      <sensor type="multicamera" name="camera_pair_1">
+        <update_rate>25.0</update_rate>
+        <always_on>1</always_on>
+        <visualize>true</visualize>
+        <camera name="cam0">
+          <pose>0 0.023 0.011 0 0 3.1415</pose>
+          <horizontal_fov>1.22</horizontal_fov>
+          <image>
+            <width>640</width>
+            <height>480</height>
+            <format>L8</format>
+          </image>
+          <clip>
+            <near>0.1</near>
+            <far>100</far>
+          </clip>
+          <noise>
+            <type>gaussian</type>
+            <mean>0.0</mean>
+            <stddev>0.001</stddev>
+          </noise>
+        </camera>
+        <camera name="cam1">
+          <pose>0 0.083 0.011 0 0 3.1415</pose>
+          <horizontal_fov>1.22</horizontal_fov>
+          <image>
+            <width>640</width>
+            <height>480</height>
+            <format>L8</format>
+          </image>
+          <clip>
+            <near>0.1</near>
+            <far>100</far>
+          </clip>
+          <noise>
+            <type>gaussian</type>
+            <mean>0.0</mean>
+            <stddev>0.001</stddev>
+          </noise>
+        </camera>
+        <camera name="cam2">
+          <pose>0.023 0.106 0.011 0 0 1.57</pose>
+          <horizontal_fov>1.22</horizontal_fov>
+          <image>
+            <width>640</width>
+            <height>480</height>
+            <format>L8</format>
+          </image>
+          <clip>
+            <near>0.1</near>
+            <far>100</far>
+          </clip>
+          <noise>
+            <type>gaussian</type>
+            <mean>0.0</mean>
+            <stddev>0.001</stddev>
+          </noise>
+        </camera>
+        <camera name="cam3">
+          <pose>0.083 0.106 0.011 0 0 1.57</pose>
+          <horizontal_fov>1.22</horizontal_fov>
+          <image>
+            <width>640</width>
+            <height>480</height>
+            <format>L8</format>
+          </image>
+          <clip>
+            <near>0.1</near>
+            <far>100</far>
+          </clip>
+          <noise>
+            <type>gaussian</type>
+            <mean>0.0</mean>
+            <stddev>0.001</stddev>
+          </noise>
+        </camera>
+        <camera name="cam4">
+          <pose>0.106 0.083 0.011 0 0 0</pose>
+          <horizontal_fov>1.22</horizontal_fov>
+          <image>
+            <width>640</width>
+            <height>480</height>
+            <format>L8</format>
+          </image>
+          <clip>
+            <near>0.1</near>
+            <far>100</far>
+          </clip>
+          <noise>
+            <type>gaussian</type>
+            <mean>0.0</mean>
+            <stddev>0.001</stddev>
+          </noise>
+        </camera>
+        <camera name="cam5">
+          <pose>0.106 0.023 0.011 0 0 0</pose>
+          <horizontal_fov>1.22</horizontal_fov>
+          <image>
+            <width>640</width>
+            <height>480</height>
+            <format>L8</format>
+          </image>
+          <clip>
+            <near>0.1</near>
+            <far>100</far>
+          </clip>
+          <noise>
+            <type>gaussian</type>
+            <mean>0.0</mean>
+            <stddev>0.001</stddev>
+          </noise>
+        </camera>
+        <camera name="cam6">
+          <pose>0.083 0 0.011 0 0 -1.57</pose>
+          <horizontal_fov>1.22</horizontal_fov>
+          <image>
+            <width>640</width>
+            <height>480</height>
+            <format>L8</format>
+          </image>
+          <clip>
+            <near>0.1</near>
+            <far>100</far>
+          </clip>
+          <noise>
+            <type>gaussian</type>
+            <mean>0.0</mean>
+            <stddev>0.001</stddev>
+          </noise>
+        </camera>
+        <camera name="cam7">
+          <pose>0.023 0 0.011 0 0 -1.57</pose>
+          <horizontal_fov>1.22</horizontal_fov>
+          <image>
+            <width>640</width>
+            <height>480</height>
+            <format>L8</format>
+          </image>
+          <clip>
+            <near>0.1</near>
+            <far>100</far>
+          </clip>
+          <noise>
+            <type>gaussian</type>
+            <mean>0.0</mean>
+            <stddev>0.001</stddev>
+          </noise>
+        </camera>
+        <plugin name="OmniCameraPlugin" filename="libgazebo_omni_plugin.so"/>
+      </sensor>
+    </link>
+
+    <!-- JOINTS----------------------------------------------------------------------------------------- -->
+    <!-- <joint name="imu_joint" type="fixed">
+      <parent>base_link</parent>
+      <child>imu_link</child>
+    </joint>
+    <joint name="camera_pair_1_joint" type="fixed">
+      <parent>base_link</parent>
+      <child>camera_pair_1_link</child>
+    </joint> -->
+    <joint name="imu_joint" type="revolute">
+      <child>imu_link</child>
+      <parent>base_link</parent>
+      <axis>
+        <xyz>0 0 1</xyz>
+        <limit>
+          <upper>0</upper>
+          <lower>0</lower>
+        </limit>
+      </axis>
+    </joint>
+    <joint name="camera_pair_1_joint" type="revolute">
+      <child>camera_pair_1_link</child>
+      <parent>base_link</parent>
+      <axis>
+        <xyz>0 0 1</xyz>
+        <limit>
+          <upper>0</upper>
+          <lower>0</lower>
+        </limit>
+      </axis>
+    </joint>
+    <!-- <joint name="test_joint" type="revolute">
+      <child>test_link</child>
+      <parent>camera_pair_1_link</parent>
+      <axis>
+        <xyz>0 0 1</xyz>
+        <limit>
+          <upper>0</upper>
+          <lower>0</lower>
+        </limit>
+      </axis>
+    </joint> -->
+
+    <!-- PLUGINS----------------------------------------------------------------------------------------- -->
+    <!-- To install the plugin do:
+    sudo add-apt-repository ppa:ethz-asl/gazebo-ros
+    sudo apt-get update
+    sudo apt-get install ros-indigo-hector-gazebo6-plugins -->
+    <plugin name="imu" filename="libhector_gazebo_ros_imu.so">
+      <serviceName>/imu/calibrate</serviceName>
+      <updateRate>800.0</updateRate>
+      <bodyName>imu_link</bodyName>
+      <frameId>imu_link</frameId>
+      <topicName>cam0_imu</topicName>
+      <rpyOffset>0 0 0</rpyOffset>
+      <xyzOffset>0 0 0</xyzOffset>
+      <gaussianNoise>0.00000001</gaussianNoise>
+      <accelDrift>0.00000001 0.00000001 0.00000001</accelDrift>
+      <accelDriftFrequency>0.00000001 0.00000001 0.00000001</accelDriftFrequency>
+      <accelGaussianNoise>0.00000001 0.00000001 0.00000001</accelGaussianNoise>
+      <rateDrift>0.0 0.0 0.0</rateDrift>
+      <rateDriftFrequency>0.0 0.0 0.0</rateDriftFrequency>
+      <rateGaussianNoise>0.0 0.0 0.0</rateGaussianNoise>
+      <headingDrift>0.0 0.0 0.0</headingDrift>
+      <headingDriftFrequency>0.0 0.0 0.0</headingDriftFrequency>
+      <headingGaussianNoise>0.0 0.0 0.0</headingGaussianNoise>
+    </plugin>
+
+  </model>
+</sdf>
