@@ -6,6 +6,9 @@ list(APPEND CMAKE_MODULE_PATH /usr/local/share/cmake/Modules)
 find_package( PkgConfig REQUIRED)
 find_package(OpenCV REQUIRED)
 find_package(gazebo REQUIRED)
+find_package(catkin REQUIRED COMPONENTS
+  roscpp
+)
 if(${GAZEBO_VERSION} VERSION_LESS "6.0")
   message(FATAL_ERROR "You need at least Gazebo 6.0. Your version: ${GAZEBO_VERSION}")
 endif()
@@ -47,6 +50,7 @@ include_directories(
   ${GAZEBO_MSG_INCLUDE_DIRS}
   ${EIGEN3_INCLUDE_DIRS}
   ${OpenCV_INCLUDE_DIRS}
+  ${catkin_INCLUDE_DIRS}
   ${CMAKE_CURRENT_BINARY_DIR}/msgs
   ${Boost_INCLUDE_DIR}
   # Workaround for Eigen3
@@ -66,7 +70,7 @@ set(scripts_dir "${CMAKE_SOURCE_DIR}/scripts")
 add_custom_target(sdf
 	WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
 	COMMAND rm -f ${CMAKE_SOURCE_DIR}/models/iris/iris.sdf
-	COMMAND python ${scripts_dir}/xacro.py -o  ${rotors_description_dir}/urdf/iris_base.urdf  ${rotors_description_dir}/urdf/iris_base.xacro enable_mavlink_interface:=${enable_mavlink_interface} enable_ground_truth:=${enable_ground_truth} enable_logging:=${enable_logging} rotors_description_dir:=${rotors_description_dir} 
+	COMMAND python ${scripts_dir}/xacro.py -o  ${rotors_description_dir}/urdf/iris_base.urdf  ${rotors_description_dir}/urdf/iris_base.xacro enable_mavlink_interface:=${enable_mavlink_interface} enable_ground_truth:=${enable_ground_truth} enable_logging:=${enable_logging} rotors_description_dir:=${rotors_description_dir}
 	COMMAND gz sdf -p  ${rotors_description_dir}/urdf/iris_base.urdf >> ${CMAKE_SOURCE_DIR}/models/iris/iris.sdf
 	COMMAND rm -f ${rotors_description_dir}/urdf/iris_base.urdf
 	)
@@ -102,6 +106,10 @@ add_dependencies(gazebo_opticalFlow_plugin mav_msgs)
 add_library(gazebo_lidar_plugin SHARED src/gazebo_lidar_plugin.cpp)
 target_link_libraries(gazebo_lidar_plugin mav_msgs ${Boost_LIBRARIES} ${GAZEBO_LIBRARIES} ${Boost_SYSTEM_LIBRARY_RELEASE} ${Boost_THREAD_LIBRARY_RELEASE})
 add_dependencies(gazebo_lidar_plugin mav_msgs)
+
+add_library(gazebo_omni_plugin SHARED src/gazebo_omni_plugin.cpp)
+target_link_libraries(gazebo_omni_plugin ${Boost_LIBRARIES} ${GAZEBO_LIBRARIES} ${Boost_SYSTEM_LIBRARY_RELEASE} ${Boost_THREAD_LIBRARY_RELEASE})
+# add_dependencies(gazebo_omni_plugin mav_msgs)
 
 add_library(rotors_gazebo_mavlink_interface SHARED src/gazebo_mavlink_interface.cpp src/geo_mag_declination.cpp)
 target_link_libraries(rotors_gazebo_mavlink_interface mav_msgs ${Boost_LIBRARIES} ${GAZEBO_LIBRARIES} ${Boost_SYSTEM_LIBRARY_RELEASE} ${Boost_THREAD_LIBRARY_RELEASE})
