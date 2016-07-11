@@ -59,7 +59,7 @@
 
     <!-- IMU ----------------------------------------------------------------------------------------- -->
     <link name="imu_link">
-      <pose>0 0.023 0.011 0 3.1415 0</pose>
+      <pose>0 0.023 0.011 -1.57 0 1.57</pose>
       <inertial>
         <pose>0 0 0 0 0 0</pose>
         <mass>0.01</mass>
@@ -89,36 +89,6 @@
     </link>
 
     <!-- CAMERAS----------------------------------------------------------------------------------------- -->
-    <!-- <link name="test_link">
-      <pose>0.023 0 0.011 0 0 -1.57</pose>
-      <inertial>
-        <pose>0 0 0 0 0 0</pose>
-        <mass>0.01</mass>
-        <inertia>
-          <ixx>6.667e-9</ixx>
-          <ixy>0</ixy>
-          <ixz>0</ixz>
-          <iyy>6.667e-9</iyy>
-          <iyz>0</iyz>
-          <izz>6.667e-9</izz>
-        </inertia>
-      </inertial>
-      <visual name="imu_visual">
-        <pose>0 0 0 0 0 0</pose>
-        <geometry>
-          <box>
-            <size>0.002 0.002 0.002</size>
-          </box>
-        </geometry>
-        <material>
-          <script>
-            <name>Gazebo/Grey</name>
-            <uri>file://media/materials/scripts/gazebo.material</uri>
-          </script>
-        </material>
-      </visual>
-    </link> -->
-
     <link name="camera_pair_1_link">
       <pose>0 0 0 0 0 0</pose>
       <inertial>
@@ -134,7 +104,7 @@
         </inertia>
       </inertial>
       <sensor type="multicamera" name="camera_pair_1">
-        <update_rate>25.0</update_rate>
+        <update_rate>10</update_rate>
         <always_on>1</always_on>
         <visualize>true</visualize>
         <camera name="cam0">
@@ -149,11 +119,11 @@
             <near>0.1</near>
             <far>100</far>
           </clip>
-          <noise>
+          <!-- <noise>
             <type>gaussian</type>
             <mean>0.0</mean>
             <stddev>0.001</stddev>
-          </noise>
+          </noise> -->
         </camera>
         <camera name="cam1">
           <pose>0 0.083 0.011 0 0 3.1415</pose>
@@ -167,11 +137,11 @@
             <near>0.1</near>
             <far>100</far>
           </clip>
-          <noise>
+          <!-- <noise>
             <type>gaussian</type>
             <mean>0.0</mean>
             <stddev>0.001</stddev>
-          </noise>
+          </noise> -->
         </camera>
         <camera name="cam2">
           <pose>0.023 0.106 0.011 0 0 1.57</pose>
@@ -185,11 +155,11 @@
             <near>0.1</near>
             <far>100</far>
           </clip>
-          <noise>
+          <!-- <noise>
             <type>gaussian</type>
             <mean>0.0</mean>
             <stddev>0.001</stddev>
-          </noise>
+          </noise> -->
         </camera>
         <camera name="cam3">
           <pose>0.083 0.106 0.011 0 0 1.57</pose>
@@ -203,11 +173,11 @@
             <near>0.1</near>
             <far>100</far>
           </clip>
-          <noise>
+          <!-- <noise>
             <type>gaussian</type>
             <mean>0.0</mean>
             <stddev>0.001</stddev>
-          </noise>
+          </noise> -->
         </camera>
         <camera name="cam4">
           <pose>0.106 0.083 0.011 0 0 0</pose>
@@ -221,11 +191,11 @@
             <near>0.1</near>
             <far>100</far>
           </clip>
-          <noise>
+          <!-- <noise>
             <type>gaussian</type>
             <mean>0.0</mean>
             <stddev>0.001</stddev>
-          </noise>
+          </noise> -->
         </camera>
         <camera name="cam5">
           <pose>0.106 0.023 0.011 0 0 0</pose>
@@ -239,11 +209,11 @@
             <near>0.1</near>
             <far>100</far>
           </clip>
-          <noise>
+          <!-- <noise>
             <type>gaussian</type>
             <mean>0.0</mean>
             <stddev>0.001</stddev>
-          </noise>
+          </noise> -->
         </camera>
         <camera name="cam6">
           <pose>0.083 0 0.011 0 0 -1.57</pose>
@@ -257,11 +227,11 @@
             <near>0.1</near>
             <far>100</far>
           </clip>
-          <noise>
+          <!-- <noise>
             <type>gaussian</type>
             <mean>0.0</mean>
             <stddev>0.001</stddev>
-          </noise>
+          </noise> -->
         </camera>
         <camera name="cam7">
           <pose>0.023 0 0.011 0 0 -1.57</pose>
@@ -275,11 +245,11 @@
             <near>0.1</near>
             <far>100</far>
           </clip>
-          <noise>
+          <!-- <noise>
             <type>gaussian</type>
             <mean>0.0</mean>
             <stddev>0.001</stddev>
-          </noise>
+          </noise> -->
         </camera>
         <plugin name="OmniCameraPlugin" filename="libgazebo_omni_plugin.so"/>
       </sensor>
@@ -316,17 +286,6 @@
         </limit>
       </axis>
     </joint>
-    <!-- <joint name="test_joint" type="revolute">
-      <child>test_link</child>
-      <parent>camera_pair_1_link</parent>
-      <axis>
-        <xyz>0 0 1</xyz>
-        <limit>
-          <upper>0</upper>
-          <lower>0</lower>
-        </limit>
-      </axis>
-    </joint> -->
 
     <!-- PLUGINS----------------------------------------------------------------------------------------- -->
     <!-- To install the plugin do:
@@ -335,7 +294,7 @@
     sudo apt-get install ros-indigo-hector-gazebo6-plugins -->
     <plugin name="imu" filename="libhector_gazebo_ros_imu.so">
       <serviceName>/imu/calibrate</serviceName>
-      <updateRate>800.0</updateRate>
+      <updateRate>200.0</updateRate>
       <bodyName>imu_link</bodyName>
       <frameId>imu_link</frameId>
       <topicName>cam0_imu</topicName>
