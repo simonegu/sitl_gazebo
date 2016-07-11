@@ -118,7 +118,7 @@ void OmniCameraPlugin::Load(sensors::SensorPtr _sensor,
     if (cameraName.find("cam0") != std::string::npos)
     {
       std::cout << "found camera 0" << std::endl;
-      image_publisher_0 = nh.advertise<sensor_msgs::Image>("gazebo_omni/cam0_image", 100);
+      image_publisher_0 = nh.advertise<sensor_msgs::Image>("omni_rig/cam0_image", 100);
 
       this->newFrameConnection.push_back(this->camera[i]->ConnectNewImageFrame(
         boost::bind(&OmniCameraPlugin::OnNewFrameCam0,
@@ -127,7 +127,7 @@ void OmniCameraPlugin::Load(sensors::SensorPtr _sensor,
     else if (cameraName.find("cam1") != std::string::npos)
     {
       std::cout << "found camera 1" << std::endl;
-      image_publisher_1 = nh.advertise<sensor_msgs::Image>("gazebo_omni/cam1_image", 100);
+      image_publisher_1 = nh.advertise<sensor_msgs::Image>("omni_rig/cam1_image", 100);
 
       this->newFrameConnection.push_back(this->camera[i]->ConnectNewImageFrame(
         boost::bind(&OmniCameraPlugin::OnNewFrameCam1,
@@ -136,7 +136,7 @@ void OmniCameraPlugin::Load(sensors::SensorPtr _sensor,
     else if (cameraName.find("cam2") != std::string::npos)
     {
       std::cout << "found camera 2" << std::endl;
-      image_publisher_2 = nh.advertise<sensor_msgs::Image>("gazebo_omni/cam2_image", 100);
+      image_publisher_2 = nh.advertise<sensor_msgs::Image>("omni_rig/cam2_image", 100);
 
       this->newFrameConnection.push_back(this->camera[i]->ConnectNewImageFrame(
         boost::bind(&OmniCameraPlugin::OnNewFrameCam2,
@@ -145,7 +145,7 @@ void OmniCameraPlugin::Load(sensors::SensorPtr _sensor,
     else if (cameraName.find("cam3") != std::string::npos)
     {
       std::cout << "found camera 3" << std::endl;
-      image_publisher_3 = nh.advertise<sensor_msgs::Image>("gazebo_omni/cam3_image", 100);
+      image_publisher_3 = nh.advertise<sensor_msgs::Image>("omni_rig/cam3_image", 100);
 
       this->newFrameConnection.push_back(this->camera[i]->ConnectNewImageFrame(
         boost::bind(&OmniCameraPlugin::OnNewFrameCam3,
@@ -154,7 +154,7 @@ void OmniCameraPlugin::Load(sensors::SensorPtr _sensor,
     else if (cameraName.find("cam4") != std::string::npos)
     {
       std::cout << "found camera 4" << std::endl;
-      image_publisher_4 = nh.advertise<sensor_msgs::Image>("gazebo_omni/cam4_image", 100);
+      image_publisher_4 = nh.advertise<sensor_msgs::Image>("omni_rig/cam4_image", 100);
 
       this->newFrameConnection.push_back(this->camera[i]->ConnectNewImageFrame(
         boost::bind(&OmniCameraPlugin::OnNewFrameCam4,
@@ -163,7 +163,7 @@ void OmniCameraPlugin::Load(sensors::SensorPtr _sensor,
     else if (cameraName.find("cam5") != std::string::npos)
     {
       std::cout << "found camera 5" << std::endl;
-      image_publisher_5 = nh.advertise<sensor_msgs::Image>("gazebo_omni/cam5_image", 100);
+      image_publisher_5 = nh.advertise<sensor_msgs::Image>("omni_rig/cam5_image", 100);
 
       this->newFrameConnection.push_back(this->camera[i]->ConnectNewImageFrame(
         boost::bind(&OmniCameraPlugin::OnNewFrameCam5,
@@ -172,7 +172,7 @@ void OmniCameraPlugin::Load(sensors::SensorPtr _sensor,
     else if (cameraName.find("cam6") != std::string::npos)
     {
       std::cout << "found camera 6" << std::endl;
-      image_publisher_6 = nh.advertise<sensor_msgs::Image>("gazebo_omni/cam6_image", 100);
+      image_publisher_6 = nh.advertise<sensor_msgs::Image>("omni_rig/cam6_image", 100);
 
       this->newFrameConnection.push_back(this->camera[i]->ConnectNewImageFrame(
         boost::bind(&OmniCameraPlugin::OnNewFrameCam6,
@@ -181,7 +181,7 @@ void OmniCameraPlugin::Load(sensors::SensorPtr _sensor,
     else if (cameraName.find("cam7") != std::string::npos)
     {
       std::cout << "found camera 7" << std::endl;
-      image_publisher_7 = nh.advertise<sensor_msgs::Image>("gazebo_omni/cam7_image", 100);
+      image_publisher_7 = nh.advertise<sensor_msgs::Image>("omni_rig/cam7_image", 100);
 
       this->newFrameConnection.push_back(this->camera[i]->ConnectNewImageFrame(
         boost::bind(&OmniCameraPlugin::OnNewFrameCam7,
@@ -213,6 +213,7 @@ void OmniCameraPlugin::OnNewFrameCam0(const unsigned char * _image,
   image_0.header.stamp.nsec = frame_time.nsec;
   image_0.width = _width;
   image_0.height = _height;
+  image_0.encoding = "mono8";
   sensor_msgs::fillImage( image_0,
                           sensor_msgs::image_encodings::MONO8,
                           _height, // height
@@ -236,6 +237,7 @@ void OmniCameraPlugin::OnNewFrameCam1(const unsigned char * _image,
   image_1.header.stamp.nsec = frame_time.nsec;
   image_1.width = _width;
   image_1.height = _height;
+  image_1.encoding = "mono8";
   sensor_msgs::fillImage( image_1,
                           sensor_msgs::image_encodings::MONO8,
                           _height, // height
@@ -259,6 +261,7 @@ void OmniCameraPlugin::OnNewFrameCam2(const unsigned char * _image,
   image_2.header.stamp.nsec = frame_time.nsec;
   image_2.width = _width;
   image_2.height = _height;
+  image_2.encoding = "mono8";
   sensor_msgs::fillImage( image_2,
                           sensor_msgs::image_encodings::MONO8,
                           _height, // height
@@ -282,6 +285,7 @@ void OmniCameraPlugin::OnNewFrameCam3(const unsigned char * _image,
   image_3.header.stamp.nsec = frame_time.nsec;
   image_3.width = _width;
   image_3.height = _height;
+  image_3.encoding = "mono8";
   sensor_msgs::fillImage( image_3,
                           sensor_msgs::image_encodings::MONO8,
                           _height, // height
@@ -305,6 +309,7 @@ void OmniCameraPlugin::OnNewFrameCam4(const unsigned char * _image,
   image_4.header.stamp.nsec = frame_time.nsec;
   image_4.width = _width;
   image_4.height = _height;
+  image_4.encoding = "mono8";
   sensor_msgs::fillImage( image_4,
                           sensor_msgs::image_encodings::MONO8,
                           _height, // height
@@ -328,6 +333,7 @@ void OmniCameraPlugin::OnNewFrameCam5(const unsigned char * _image,
   image_5.header.stamp.nsec = frame_time.nsec;
   image_5.width = _width;
   image_5.height = _height;
+  image_5.encoding = "mono8";
   sensor_msgs::fillImage( image_5,
                           sensor_msgs::image_encodings::MONO8,
                           _height, // height
@@ -351,6 +357,7 @@ void OmniCameraPlugin::OnNewFrameCam6(const unsigned char * _image,
   image_6.header.stamp.nsec = frame_time.nsec;
   image_6.width = _width;
   image_6.height = _height;
+  image_6.encoding = "mono8";
   sensor_msgs::fillImage( image_6,
                           sensor_msgs::image_encodings::MONO8,
                           _height, // height
@@ -374,6 +381,7 @@ void OmniCameraPlugin::OnNewFrameCam7(const unsigned char * _image,
   image_7.header.stamp.nsec = frame_time.nsec;
   image_7.width = _width;
   image_7.height = _height;
+  image_7.encoding = "mono8";
   sensor_msgs::fillImage( image_7,
                           sensor_msgs::image_encodings::MONO8,
                           _height, // height
