@@ -111,6 +111,10 @@ add_library(gazebo_omni_plugin SHARED src/gazebo_omni_plugin.cpp)
 target_link_libraries(gazebo_omni_plugin ${Boost_LIBRARIES} ${GAZEBO_LIBRARIES} ${Boost_SYSTEM_LIBRARY_RELEASE} ${Boost_THREAD_LIBRARY_RELEASE})
 add_dependencies(gazebo_omni_plugin mav_msgs)
 
+add_library(gazebo_rviz_ground_truth_plugin SHARED src/gazebo_rviz_ground_truth_plugin.cpp)
+target_link_libraries(gazebo_rviz_ground_truth_plugin ${Boost_LIBRARIES} ${GAZEBO_LIBRARIES} ${Boost_SYSTEM_LIBRARY_RELEASE} ${Boost_THREAD_LIBRARY_RELEASE})
+add_dependencies(gazebo_rviz_ground_truth_plugin mav_msgs)
+
 add_library(rotors_gazebo_mavlink_interface SHARED src/gazebo_mavlink_interface.cpp src/geo_mag_declination.cpp)
 target_link_libraries(rotors_gazebo_mavlink_interface mav_msgs ${Boost_LIBRARIES} ${GAZEBO_LIBRARIES} ${Boost_SYSTEM_LIBRARY_RELEASE} ${Boost_THREAD_LIBRARY_RELEASE})
 add_dependencies(rotors_gazebo_mavlink_interface mav_msgs)

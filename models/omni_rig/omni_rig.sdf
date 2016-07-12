@@ -312,5 +312,6 @@
       <headingGaussianNoise>0.0 0.0 0.0</headingGaussianNoise>
     </plugin>
 
+    <plugin name="RvizGroundTruth" filename="libgazebo_rviz_ground_truth_plugin.so"/>
   </model>
 </sdf>
