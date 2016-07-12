@@ -18,7 +18,7 @@ namespace gazebo
 {
   class RvizGroundTruth : public ModelPlugin
   {
-    public: void Load(physics::ModelPtr _parent, sdf::ElementPtr /*_sdf*/)
+    public: void Load(physics::ModelPtr _parent, sdf::ElementPtr _sdf)
     {
       // Store the pointer to the model
       this->model = _parent;
@@ -27,6 +27,14 @@ namespace gazebo
       # else
           model_name = this->model->GetName();
       # endif
+
+      //get sdf params
+      if (_sdf->HasElement("calc_path")) {
+        calc_path = _sdf->GetElement("calc_path")->Get<bool>();
+      } else {
+        gzwarn << "[gazebo_rviz_ground_truth_plugin] defaulting to calc_path = false.\n";
+        calc_path = false;
+      }
 
       //set up ros
       ros::NodeHandle nh("~");
@@ -39,6 +47,8 @@ namespace gazebo
       // simulation iteration.
       this->updateConnection = event::Events::ConnectWorldUpdateBegin(
           boost::bind(&RvizGroundTruth::OnUpdate, this, _1));
+
+      std::cout << "[gazebo_rviz_ground_truth_plugin] loaded\n";
     }
 
     // Called by the world update start event
@@ -128,24 +138,26 @@ namespace gazebo
       z_marker.points[1].z = z + z_axis[2];
 
       //path
-      geometry_msgs::PoseStamped pose_msg;
-      pose_msg.header.frame_id = "world";
-      pose_msg.header.stamp = ros::Time::now();
-      pose_msg.pose.position.x = x;
-      pose_msg.pose.position.y = y;
-      pose_msg.pose.position.z = z;
-      pose_msg.pose.orientation.x = qx;
-      pose_msg.pose.orientation.y = qy;
-      pose_msg.pose.orientation.z = qz;
-      pose_msg.pose.orientation.w = qw;
-      path.header = pose_msg.header;
-      path.poses.push_back(pose_msg);
+      if (calc_path) {
+        geometry_msgs::PoseStamped pose_msg;
+        pose_msg.header.frame_id = "world";
+        pose_msg.header.stamp = ros::Time::now();
+        pose_msg.pose.position.x = x;
+        pose_msg.pose.position.y = y;
+        pose_msg.pose.position.z = z;
+        pose_msg.pose.orientation.x = qx;
+        pose_msg.pose.orientation.y = qy;
+        pose_msg.pose.orientation.z = qz;
+        pose_msg.pose.orientation.w = qw;
+        path.header = pose_msg.header;
+        path.poses.push_back(pose_msg);
 
-      path_pub.publish(path);
-      int size = path.poses.size();
+        path_pub.publish(path);
+        int size = path.poses.size();
 
-      if (path.poses.size() > 100000) {
-        path.poses.clear();
+        if (path.poses.size() > 100000) {
+          path.poses.clear();
+        }
       }
 
       // publish the markers
@@ -161,6 +173,7 @@ namespace gazebo
       nav_msgs::Path path;
       ros::Publisher marker_pub;
       ros::Publisher path_pub;
+      bool calc_path;
   };
 
   // Register this plugin with the simulator
