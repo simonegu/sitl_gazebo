@@ -117,7 +117,7 @@ void OmniCameraPlugin::Load(sensors::SensorPtr _sensor,
 
     if (cameraName.find("cam0") != std::string::npos)
     {
-      std::cout << "found camera 0" << std::endl;
+      std::cout << "[gazebo_omni_plugin] found camera 0" << std::endl;
       image_publisher_0 = nh.advertise<sensor_msgs::Image>("omni_rig/cam0_image", 100);
 
       this->newFrameConnection.push_back(this->camera[i]->ConnectNewImageFrame(
@@ -126,7 +126,7 @@ void OmniCameraPlugin::Load(sensors::SensorPtr _sensor,
     }
     else if (cameraName.find("cam1") != std::string::npos)
     {
-      std::cout << "found camera 1" << std::endl;
+      std::cout << "[gazebo_omni_plugin] found camera 1" << std::endl;
       image_publisher_1 = nh.advertise<sensor_msgs::Image>("omni_rig/cam1_image", 100);
 
       this->newFrameConnection.push_back(this->camera[i]->ConnectNewImageFrame(
@@ -135,7 +135,7 @@ void OmniCameraPlugin::Load(sensors::SensorPtr _sensor,
     }
     else if (cameraName.find("cam2") != std::string::npos)
     {
-      std::cout << "found camera 2" << std::endl;
+      std::cout << "[gazebo_omni_plugin] found camera 2" << std::endl;
       image_publisher_2 = nh.advertise<sensor_msgs::Image>("omni_rig/cam2_image", 100);
 
       this->newFrameConnection.push_back(this->camera[i]->ConnectNewImageFrame(
@@ -144,7 +144,7 @@ void OmniCameraPlugin::Load(sensors::SensorPtr _sensor,
     }
     else if (cameraName.find("cam3") != std::string::npos)
     {
-      std::cout << "found camera 3" << std::endl;
+      std::cout << "[gazebo_omni_plugin] found camera 3" << std::endl;
       image_publisher_3 = nh.advertise<sensor_msgs::Image>("omni_rig/cam3_image", 100);
 
       this->newFrameConnection.push_back(this->camera[i]->ConnectNewImageFrame(
@@ -153,7 +153,7 @@ void OmniCameraPlugin::Load(sensors::SensorPtr _sensor,
     }
     else if (cameraName.find("cam4") != std::string::npos)
     {
-      std::cout << "found camera 4" << std::endl;
+      std::cout << "[gazebo_omni_plugin] found camera 4" << std::endl;
       image_publisher_4 = nh.advertise<sensor_msgs::Image>("omni_rig/cam4_image", 100);
 
       this->newFrameConnection.push_back(this->camera[i]->ConnectNewImageFrame(
@@ -162,7 +162,7 @@ void OmniCameraPlugin::Load(sensors::SensorPtr _sensor,
     }
     else if (cameraName.find("cam5") != std::string::npos)
     {
-      std::cout << "found camera 5" << std::endl;
+      std::cout << "[gazebo_omni_plugin] found camera 5" << std::endl;
       image_publisher_5 = nh.advertise<sensor_msgs::Image>("omni_rig/cam5_image", 100);
 
       this->newFrameConnection.push_back(this->camera[i]->ConnectNewImageFrame(
@@ -171,7 +171,7 @@ void OmniCameraPlugin::Load(sensors::SensorPtr _sensor,
     }
     else if (cameraName.find("cam6") != std::string::npos)
     {
-      std::cout << "found camera 6" << std::endl;
+      std::cout << "[gazebo_omni_plugin] found camera 6" << std::endl;
       image_publisher_6 = nh.advertise<sensor_msgs::Image>("omni_rig/cam6_image", 100);
 
       this->newFrameConnection.push_back(this->camera[i]->ConnectNewImageFrame(
@@ -180,7 +180,7 @@ void OmniCameraPlugin::Load(sensors::SensorPtr _sensor,
     }
     else if (cameraName.find("cam7") != std::string::npos)
     {
-      std::cout << "found camera 7" << std::endl;
+      std::cout << "[gazebo_omni_plugin] found camera 7" << std::endl;
       image_publisher_7 = nh.advertise<sensor_msgs::Image>("omni_rig/cam7_image", 100);
 
       this->newFrameConnection.push_back(this->camera[i]->ConnectNewImageFrame(
@@ -190,6 +190,8 @@ void OmniCameraPlugin::Load(sensors::SensorPtr _sensor,
   }
 
   this->parentSensor->SetActive(true);
+
+  std::cout << "[gazebo_omni_plugin] loaded\n";
 }
 
 /////////////////////////////////////////////////
