@@ -89,7 +89,7 @@
     </link>
 
     <!-- CAMERAS----------------------------------------------------------------------------------------- -->
-    <link name="camera_pair_1_link">
+    <link name="camera_rig_link">
       <pose>0 0 0 0 0 0</pose>
       <inertial>
         <pose>0 0 0 0 0 0</pose>
@@ -103,7 +103,7 @@
           <izz>3.3335e-8</izz>
         </inertia>
       </inertial>
-      <sensor type="multicamera" name="camera_pair_1">
+      <sensor type="multicamera" name="multi_camera_rig">
         <update_rate>10</update_rate>
         <always_on>1</always_on>
         <visualize>true</visualize>
@@ -275,8 +275,8 @@
         </limit>
       </axis>
     </joint>
-    <joint name="camera_pair_1_joint" type="revolute">
-      <child>camera_pair_1_link</child>
+    <joint name="camera_rig_joint" type="revolute">
+      <child>camera_rig_link</child>
       <parent>base_link</parent>
       <axis>
         <xyz>0 0 1</xyz>
