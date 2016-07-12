@@ -9,7 +9,8 @@
 #include <ros/ros.h>
 #include <visualization_msgs/Marker.h>
 #include <tf/transform_datatypes.h>
-// #include <geometry_msgs/PoseStamped.h>
+#include <geometry_msgs/PoseStamped.h>
+#include <nav_msgs/Path.h>
 
 #include <boost/bind.hpp>
 
@@ -30,6 +31,9 @@ namespace gazebo
       //set up ros
       ros::NodeHandle nh("~");
       marker_pub = nh.advertise<visualization_msgs::Marker>(model_name + "/pose", 1);
+      path_pub = nh.advertise<nav_msgs::Path>(model_name + "/path", 1);
+      //clear all poses in path
+      path.poses.clear();
 
       // Listen to the update event. This event is broadcast every
       // simulation iteration.
@@ -123,6 +127,27 @@ namespace gazebo
       z_marker.points[1].y = y + z_axis[1];
       z_marker.points[1].z = z + z_axis[2];
 
+      //path
+      geometry_msgs::PoseStamped pose_msg;
+      pose_msg.header.frame_id = "world";
+      pose_msg.header.stamp = ros::Time::now();
+      pose_msg.pose.position.x = x;
+      pose_msg.pose.position.y = y;
+      pose_msg.pose.position.z = z;
+      pose_msg.pose.orientation.x = qx;
+      pose_msg.pose.orientation.y = qy;
+      pose_msg.pose.orientation.z = qz;
+      pose_msg.pose.orientation.w = qw;
+      path.header = pose_msg.header;
+      path.poses.push_back(pose_msg);
+
+      path_pub.publish(path);
+      int size = path.poses.size();
+
+      if (path.poses.size() > 100000) {
+        path.poses.clear();
+      }
+
       // publish the markers
       marker_pub.publish(x_marker);
       marker_pub.publish(y_marker);
@@ -133,7 +158,9 @@ namespace gazebo
       physics::ModelPtr model;
       event::ConnectionPtr updateConnection;
       std::string model_name;
+      nav_msgs::Path path;
       ros::Publisher marker_pub;
+      ros::Publisher path_pub;
   };
 
   // Register this plugin with the simulator
