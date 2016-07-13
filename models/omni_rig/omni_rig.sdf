@@ -41,7 +41,7 @@
         </surface>
       </collision>
       <visual name='base_visual'>
-        <pose>0 0 0 0 -1.57 -1.57</pose>
+        <pose>0 0 0 0 -1.5707963 -1.5707963</pose>
         <geometry>
           <mesh>
             <scale>0.001 0.001 0.001</scale>
@@ -59,7 +59,7 @@
 
     <!-- IMU ----------------------------------------------------------------------------------------- -->
     <link name="imu_link">
-      <pose>0 0.023 0.011 -1.57 0 1.57</pose>
+      <pose>0 0.023 0.011 -1.5707963 0 1.5707963</pose>
       <inertial>
         <pose>0 0 0 0 0 0</pose>
         <mass>0.01</mass>
@@ -108,7 +108,7 @@
         <always_on>1</always_on>
         <visualize>true</visualize>
         <camera name="cam0">
-          <pose>0 0.023 0.011 0 0 3.1415</pose>
+          <pose>0 0.023 0.011 0 0 3.1416</pose>
           <horizontal_fov>1.22</horizontal_fov>
           <image>
             <width>640</width>
@@ -126,7 +126,7 @@
           </noise> -->
         </camera>
         <camera name="cam1">
-          <pose>0 0.083 0.011 0 0 3.1415</pose>
+          <pose>0 0.083 0.011 0 0 3.1416</pose>
           <horizontal_fov>1.22</horizontal_fov>
           <image>
             <width>640</width>
@@ -144,7 +144,7 @@
           </noise> -->
         </camera>
         <camera name="cam2">
-          <pose>0.023 0.106 0.011 0 0 1.57</pose>
+          <pose>0.023 0.106 0.011 0 0 1.5707963</pose>
           <horizontal_fov>1.22</horizontal_fov>
           <image>
             <width>640</width>
@@ -162,7 +162,7 @@
           </noise> -->
         </camera>
         <camera name="cam3">
-          <pose>0.083 0.106 0.011 0 0 1.57</pose>
+          <pose>0.083 0.106 0.011 0 0 1.5707963</pose>
           <horizontal_fov>1.22</horizontal_fov>
           <image>
             <width>640</width>
@@ -216,7 +216,7 @@
           </noise> -->
         </camera>
         <camera name="cam6">
-          <pose>0.083 0 0.011 0 0 -1.57</pose>
+          <pose>0.083 0 0.011 0 0 -1.5707963</pose>
           <horizontal_fov>1.22</horizontal_fov>
           <image>
             <width>640</width>
@@ -234,7 +234,7 @@
           </noise> -->
         </camera>
         <camera name="cam7">
-          <pose>0.023 0 0.011 0 0 -1.57</pose>
+          <pose>0.023 0 0.011 0 0 -1.5707963</pose>
           <horizontal_fov>1.22</horizontal_fov>
           <image>
             <width>640</width>
@@ -314,6 +314,7 @@
 
     <plugin name="RvizGroundTruth" filename="libgazebo_rviz_ground_truth_plugin.so">
       <calc_path>false</calc_path>
+      <link_name>base_link</link_name>
     </plugin>
   </model>
 </sdf>
