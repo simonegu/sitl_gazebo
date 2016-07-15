@@ -1,7 +1,7 @@
 <?xml version="1.0" ?>
 <sdf version="1.5">
   <model name="april_tag36_11_00002">
-    <static>true</static>
+    <!-- <static>true</static> -->
     <link name="link">
       <collision name="collision">
         <geometry>
