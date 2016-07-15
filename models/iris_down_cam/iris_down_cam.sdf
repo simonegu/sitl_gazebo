@@ -3,10 +3,17 @@
 
     <include>
       <uri>model://iris</uri>
+      <plugin name="RvizGroundTruth" filename="libgazebo_rviz_ground_truth_plugin.so">
+        <calc_path>false</calc_path>
+      </plugin>
     </include>
 
-    <joint name="camera_joint1" type="revolute">
-      <child>camera_link1</child>
+    <include>
+      <uri>model://stereo_cam</uri>
+      <pose>0 0 -0.01 0 0 0</pose>
+    </include>
+    <joint name="stereo_joint" type="revolute">
+      <child>stereo_cam::base_link</child>
       <parent>iris::base_link</parent>
       <axis>
         <xyz>0 0 1</xyz>
@@ -16,160 +23,6 @@
         </limit>
       </axis>
     </joint>
-
-    <joint name="camera_joint2" type="revolute">
-      <child>camera_link2</child>
-      <parent>iris::base_link</parent>
-      <axis>
-        <xyz>0 0 1</xyz>
-        <limit>
-          <upper>0</upper>
-          <lower>0</lower>
-        </limit>
-      </axis>
-    </joint>
-
-    <link name="camera_link1">
-      <pose>0 0 0 0 1.5708 1.5708</pose>
-      <inertial>
-        <pose>0.01 0.025 0.025 0 -0 0</pose>
-        <mass>0.01</mass>
-        <inertia>
-          <ixx>4.15e-6</ixx>
-          <ixy>0</ixy>
-          <ixz>0</ixz>
-          <iyy>2.407e-6</iyy>
-          <iyz>0</iyz>
-          <izz>2.407e-6</izz>
-        </inertia>
-      </inertial>
-      <visual name="visual">
-        <geometry>
-          <box>
-            <size>0.02 0.05 0.05</size>
-          </box>
-        </geometry>
-      </visual>
-      <sensor name="camera1" type="camera">
-        <update_rate>30.0</update_rate>
-        <camera>
-          <!-- focal length of snapdragon 280.1693782018111 result in 1.7033 field of view -->
-          <!-- <horizontal_fov>1.70333324</horizontal_fov> -->
-          <!-- omni cam field of view -->
-          <horizontal_fov>0.7748</horizontal_fov>
-          <image>
-            <width>640</width>
-            <height>480</height>
-            <format>L8</format>
-          </image>
-          <clip>
-            <near>0.1</near>
-            <far>100</far>
-          </clip>
-          <noise>
-            <type>gaussian</type>
-            <mean>0.0</mean>
-            <stddev>0.005</stddev>
-          </noise>
-          <!-- <distortion>
-            <k1>-0.2640186053623701</k1>
-            <k2>0.06940412062783204</k2>
-            <k3>-0.008088684701147913</k3>
-            <p1>0.0</p1>
-            <p2>0.0</p2>
-            <center>0.5 0.5</center>
-          </distortion> -->
-        </camera>
-        <!-- plugin does not support camera distortion -->
-        <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
-          <robotNamespace>iris</robotNamespace>
-          <alwaysOn>true</alwaysOn>
-          <updateRate>30.0</updateRate>
-          <cameraName>camera1</cameraName>
-          <imageTopicName>image_raw</imageTopicName>
-          <cameraInfoTopicName>camera_info</cameraInfoTopicName>
-          <!-- <frameName>camera_link</frameName>
-          <hackBaseline>0</hackBaseline>
-          <focalLength>280.1693782018111</focalLength>
-          <distortionK1>-0.2640186053623701</distortionK1>
-          <distortionK2>0.06940412062783204</distortionK2>
-          <distortionK3>-0.008088684701147913</distortionK3>
-          <distortionT1>0.0</distortionT1>
-          <distortionT2>0.0</distortionT2> -->
-        </plugin>
-      </sensor>
-    </link>
-
-    <link name="camera_link2">
-      <pose>-0.1 0 0 0 1.5708 1.5708</pose>
-      <inertial>
-        <pose>0.01 0.025 0.025 0 -0 0</pose>
-        <mass>0.01</mass>
-        <inertia>
-          <ixx>4.15e-6</ixx>
-          <ixy>0</ixy>
-          <ixz>0</ixz>
-          <iyy>2.407e-6</iyy>
-          <iyz>0</iyz>
-          <izz>2.407e-6</izz>
-        </inertia>
-      </inertial>
-      <visual name="visual">
-        <geometry>
-          <box>
-            <size>0.02 0.05 0.05</size>
-          </box>
-        </geometry>
-      </visual>
-      <sensor name="camera2" type="camera">
-        <update_rate>30.0</update_rate>
-        <camera>
-          <!-- focal length of snapdragon 280.1693782018111 result in 1.7033 field of view -->
-          <!-- <horizontal_fov>1.70333324</horizontal_fov> -->
-          <!-- omni cam field of view -->
-          <horizontal_fov>0.7748</horizontal_fov>
-          <image>
-            <width>640</width>
-            <height>480</height>
-            <format>L8</format>
-          </image>
-          <clip>
-            <near>0.1</near>
-            <far>100</far>
-          </clip>
-          <noise>
-            <type>gaussian</type>
-            <mean>0.0</mean>
-            <stddev>0.005</stddev>
-          </noise>
-          <!-- <distortion>
-            <k1>-0.2640186053623701</k1>
-            <k2>0.06940412062783204</k2>
-            <k3>-0.008088684701147913</k3>
-            <p1>0.0</p1>
-            <p2>0.0</p2>
-            <center>0.5 0.5</center>
-          </distortion> -->
-        </camera>
-        <!-- plugin does not support camera distortion -->
-        <plugin name="camera_controller1" filename="libgazebo_ros_camera.so">
-          <robotNamespace>iris</robotNamespace>
-          <alwaysOn>true</alwaysOn>
-          <updateRate>30.0</updateRate>
-          <cameraName>camera2</cameraName>
-          <imageTopicName>image_raw</imageTopicName>
-          <cameraInfoTopicName>camera_info</cameraInfoTopicName>
-          <!-- <frameName>camera_link</frameName>
-          <hackBaseline>0</hackBaseline>
-          <focalLength>280.1693782018111</focalLength>
-          <distortionK1>-0.2640186053623701</distortionK1>
-          <distortionK2>0.06940412062783204</distortionK2>
-          <distortionK3>-0.008088684701147913</distortionK3>
-          <distortionT1>0.0</distortionT1>
-          <distortionT2>0.0</distortionT2> -->
-        </plugin>
-      </sensor>
-    </link>
 
   </model>
 </sdf>
