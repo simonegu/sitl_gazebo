@@ -8,6 +8,7 @@ find_package(OpenCV REQUIRED)
 find_package(gazebo REQUIRED)
 find_package(catkin REQUIRED COMPONENTS
   roscpp
+  tf
 )
 if(${GAZEBO_VERSION} VERSION_LESS "6.0")
   message(FATAL_ERROR "You need at least Gazebo 6.0. Your version: ${GAZEBO_VERSION}")
@@ -112,8 +113,12 @@ target_link_libraries(gazebo_omni_plugin ${Boost_LIBRARIES} ${GAZEBO_LIBRARIES} 
 add_dependencies(gazebo_omni_plugin mav_msgs)
 
 add_library(gazebo_rviz_ground_truth_plugin SHARED src/gazebo_rviz_ground_truth_plugin.cpp)
-target_link_libraries(gazebo_rviz_ground_truth_plugin ${Boost_LIBRARIES} ${GAZEBO_LIBRARIES} ${Boost_SYSTEM_LIBRARY_RELEASE} ${Boost_THREAD_LIBRARY_RELEASE})
+target_link_libraries(gazebo_rviz_ground_truth_plugin ${Boost_LIBRARIES} ${GAZEBO_LIBRARIES} ${Boost_SYSTEM_LIBRARY_RELEASE} ${Boost_THREAD_LIBRARY_RELEASE} ${catkin_LIBRARIES})
 add_dependencies(gazebo_rviz_ground_truth_plugin mav_msgs)
+
+add_library(gazebo_ground_truth_tf_plugin SHARED src/gazebo_ground_truth_tf_plugin.cpp)
+target_link_libraries(gazebo_ground_truth_tf_plugin ${Boost_LIBRARIES} ${GAZEBO_LIBRARIES} ${Boost_SYSTEM_LIBRARY_RELEASE} ${Boost_THREAD_LIBRARY_RELEASE} ${catkin_LIBRARIES})
+add_dependencies(gazebo_ground_truth_tf_plugin mav_msgs)
 
 add_library(rotors_gazebo_mavlink_interface SHARED src/gazebo_mavlink_interface.cpp src/geo_mag_declination.cpp)
 target_link_libraries(rotors_gazebo_mavlink_interface mav_msgs ${Boost_LIBRARIES} ${GAZEBO_LIBRARIES} ${Boost_SYSTEM_LIBRARY_RELEASE} ${Boost_THREAD_LIBRARY_RELEASE})
