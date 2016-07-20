@@ -3,9 +3,6 @@
 
     <include>
       <uri>model://iris</uri>
-      <plugin name="RvizGroundTruth" filename="libgazebo_rviz_ground_truth_plugin.so">
-        <calc_path>false</calc_path>
-      </plugin>
     </include>
 
     <include>
