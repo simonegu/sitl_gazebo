@@ -161,10 +161,6 @@
       </axis>
     </joint>
 
-    <link name="stereo_camera_opt_link">
-      <pose>0 0 0 3.1415 0 0</pose>
-    </link>
-
     <joint name="camera_rig_joint" type="revolute">
       <child>stereo_camera_link</child>
       <parent>base_link</parent>
@@ -214,8 +210,8 @@
       <headingGaussianNoise>0.0 0.0 0.0</headingGaussianNoise>
     </plugin>
 
-    <plugin name="RvizGroundTruth" filename="libgazebo_rviz_ground_truth_plugin.so">
-      <link_name>stereo_camera_opt_link</link_name>
+    <plugin name="GazeboGroundTruthTf" filename="libgazebo_ground_truth_tf_plugin.so">
+      <link_name>stereo_camera_link</link_name>
       <calc_path>false</calc_path>
     </plugin>
   </model>
